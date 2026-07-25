@@ -15,20 +15,13 @@ const API_BASE = "https://e-commerce-api-3wara.vercel.app";
 function normalizeProduct(p) {
   return {
     id: p._id || p.id,
-    name: p.name,
-    
-    _id: p._id || p.id,     
+    name: p.name,   
     images: p.images,          
-
     category: p.category,
     price: p.discountPrice || p.price,
-
     oldPrice: p.discountPrice ? p.price : null,
     discount: p.discountPrice ? `-${Math.round(((p.price - p.discountPrice) / p.price) * 100).toLocaleString("en-US")}%` : null,
-
-
     stock: p.stock,
-    
 
     image: p.images?.[0]?.url,
     averageRating: p.averageRating,
@@ -158,7 +151,6 @@ export default function Shop() {
               </select>
             </div>
 
-            {/* ///// */}
             <button
               onClick={() => {
                 setSelectedCategory("All");
@@ -172,7 +164,6 @@ export default function Shop() {
               Clear All Filters
             </button>
 
-            {/*  */}
           </aside>
 
           <main className="col-span-9">
@@ -185,15 +176,12 @@ export default function Shop() {
                 <div key={p.id} className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm hover:shadow-lg duration-300 overflow-hidden">
                   <div className="relative h-64 bg-gray-100 dark:bg-gray-700 overflow-hidden">
 
-
                      <img  src={p.image} alt={p.name}  className="w-full h-full object-contain p-5 transition-transform duration-300 hover:scale-105"/>
-   
-
                     <button
                       onClick={() => toggleWishlist(p)}
                       className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white dark:bg-gray-900 shadow flex items-center justify-center hover:bg-red-50 dark:hover:bg-red-950/40 transition">
 
-                     <FaHeart className={`text-sm ${isInWishlist(p._id) ? "text-red-500" : "text-gray-300 dark:text-gray-600"}`} />
+                     <FaHeart className={`text-sm ${isInWishlist(p.id) ? "text-red-500" : "text-gray-300 dark:text-gray-600"}`} />
                     </button>
                     <div className="absolute top-4 left-4 flex gap-2">
                       {p.category && (
@@ -238,13 +226,7 @@ export default function Shop() {
                         });
                       }}
 
-
-
                       className={`w-full h-12 rounded-xl font-semibold flex justify-center items-center gap-2 ${p.stock > 0 ? "bg-indigo-600 text-white hover:bg-indigo-700" : "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"}`} >
-
-
-
-
                       <FaShoppingCart />
                       {p.stock > 0 ? "Add to Cart" : "Out of Stock"}
                     </button>
