@@ -33,7 +33,6 @@ export default function OrderDetails() {
       });
 
       const data = await res.json();
-
       setOrder(data.order || data);
     } catch (err) {
       console.log(err);
@@ -64,7 +63,7 @@ export default function OrderDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -72,28 +71,26 @@ export default function OrderDetails() {
 
   if (!order) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <h2 className="text-xl font-bold">Order not found</h2>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+          Order not found
+        </h2>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-4xl mx-auto px-4">
-
-     
 
         <div className="flex items-start justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
               Order Details
             </h1>
 
-            <p className="mt-1 text-base text-slate-500">
-              Order #
-              {order.orderNumber ||
-                order._id?.slice(-8).toUpperCase()}
+            <p className="mt-1 text-base text-gray-500 dark:text-gray-400">
+              Order #{order.orderNumber || order._id?.slice(-8).toUpperCase()}
             </p>
           </div>
 
@@ -109,14 +106,13 @@ export default function OrderDetails() {
 
         {order.status?.toLowerCase() !== "cancelled" &&
           order.status?.toLowerCase() !== "returned" && (
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 mb-6">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5 mb-6">
 
-              <h2 className="text-xl font-bold mb-6">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                 Order Progress
               </h2>
 
               <div className="relative flex justify-between">
-
                 {progress.map((step, index) => (
                   <div
                     key={step}
@@ -127,7 +123,7 @@ export default function OrderDetails() {
                         className={`absolute top-4 left-1/2 h-[2px] w-full ${
                           index < currentStep
                             ? "bg-indigo-600"
-                            : "bg-slate-200"
+                            : "bg-gray-200 dark:bg-gray-700"
                         }`}
                       />
                     )}
@@ -136,7 +132,7 @@ export default function OrderDetails() {
                       className={`z-10 w-9 h-9 rounded-full border-4 flex items-center justify-center ${
                         index <= currentStep
                           ? "bg-indigo-600 border-indigo-600 text-white"
-                          : "bg-white border-slate-300 text-slate-300"
+                          : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-300 dark:text-gray-500"
                       }`}
                     >
                       {index <= currentStep ? (
@@ -150,7 +146,7 @@ export default function OrderDetails() {
                       className={`mt-2 text-xs font-medium ${
                         index <= currentStep
                           ? "text-indigo-600"
-                          : "text-slate-400"
+                          : "text-gray-400 dark:text-gray-500"
                       }`}
                     >
                       {step.charAt(0).toUpperCase() + step.slice(1)}
@@ -159,18 +155,18 @@ export default function OrderDetails() {
                 ))}
               </div>
             </div>
-          )}
-
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          )}        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
           <div className="flex items-center gap-2 mb-5">
             <FiPackage className="text-indigo-600 text-xl" />
-            <h2 className="text-xl font-bold">Items</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+              Items
+            </h2>
           </div>
 
           {order.items?.map((item) => (
             <div
               key={item._id}
-              className="flex items-center justify-between py-4 border-b last:border-b-0"
+              className="flex items-center justify-between py-4 border-b border-gray-100 dark:border-gray-700 last:border-b-0"
             >
               <div className="flex items-center gap-4">
                 <img
@@ -179,84 +175,84 @@ export default function OrderDetails() {
                     "https://placehold.co/80x80"
                   }
                   alt={item.product?.name}
-                  className="w-16 h-16 rounded-lg bg-slate-100 object-cover"
+                  className="w-16 h-16 rounded-lg bg-gray-100 dark:bg-gray-700 object-cover"
                 />
 
                 <div>
-                  <h3 className="text-base font-semibold text-slate-800">
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
                     {item.product?.name}
                   </h3>
 
-                  <p className="text-sm text-slate-500 mt-1">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                     Qty: {item.quantity} × EGP{" "}
                     {Number(item.price).toLocaleString()}
                   </p>
                 </div>
               </div>
 
-              <h3 className="text-lg font-bold text-slate-800">
-                EGP{" "}
-                {Number(item.quantity * item.price).toLocaleString()}
+              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                EGP {Number(item.quantity * item.price).toLocaleString()}
               </h3>
             </div>
           ))}
         </div>
 
-     
-
         <div className="grid lg:grid-cols-2 gap-5 mt-6">
 
-  
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
             <div className="flex items-center gap-2 mb-5">
               <FiMapPin className="text-indigo-600 text-xl" />
-              <h2 className="text-xl font-bold">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 Shipping Address
               </h2>
             </div>
 
             <div className="space-y-2">
-              <p className="text-base font-semibold text-slate-800">
+              <p className="text-base font-semibold text-gray-900 dark:text-gray-100">
                 {order.shippingAddress?.fullName}
               </p>
 
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {order.shippingAddress?.address}
               </p>
 
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {order.shippingAddress?.city},{" "}
                 {order.shippingAddress?.country}
               </p>
 
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {order.shippingAddress?.phone}
               </p>
             </div>
-          </div>           
-
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          </div>          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
             <div className="flex items-center gap-2 mb-5">
               <FiCreditCard className="text-indigo-600 text-xl" />
-              <h2 className="text-xl font-bold">Payment</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                Payment
+              </h2>
             </div>
 
-            <p className="text-base text-slate-700">
+            <p className="text-base text-gray-700 dark:text-gray-300">
               {order.paymentMethod || "Cash on Delivery"}
             </p>
 
-            <div className="border-t my-5"></div>
+            <div className="border-t border-gray-100 dark:border-gray-700 my-5"></div>
 
             <div className="flex justify-between items-center">
-              <span className="text-lg font-bold">Total</span>
+              <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                Total
+              </span>
 
-              <span className="text-2xl font-bold text-indigo-600">
+              <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
                 EGP{" "}
-                {Number(order.totalPrice || order.total || 0).toLocaleString()}
+                {Number(
+                  order.totalPrice || order.total || 0
+                ).toLocaleString()}
               </span>
             </div>
 
-            <p className="mt-3 text-sm text-slate-400">
+            <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
               Placed on{" "}
               {new Date(order.createdAt).toLocaleDateString("en-US", {
                 month: "short",
@@ -273,12 +269,15 @@ export default function OrderDetails() {
             <button
               onClick={async () => {
                 try {
-                  await fetch(`${API_BASE}/orders/my/${order._id}/cancel`, {
-                    method: "PATCH",
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                  });
+                  await fetch(
+                    `${API_BASE}/orders/my/${order._id}/cancel`,
+                    {
+                      method: "PATCH",
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
 
                   fetchOrder();
                 } catch (err) {
